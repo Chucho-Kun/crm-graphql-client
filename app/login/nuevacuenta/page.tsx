@@ -4,6 +4,7 @@ import { NuevoUsuarioResponse, UsuarioInput } from '@/types';
 import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client/react';
 import { useFormik } from 'formik'
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import * as Yup from "yup"
@@ -159,6 +160,11 @@ export default function nuevaCuentaPage() {
               type="submit"
             />
           </form>
+
+          <Link href='/login' className='text-white opacity-60 hover:opacity-100 align-middle flex justify-center' >
+            ¿Ya tienes una cuenta? Acceder
+          </Link>
+
         </div>
       </div>
     </>

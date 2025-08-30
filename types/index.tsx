@@ -33,5 +33,13 @@ export type ClientesVendedorResponse = {
         email: string
         id: string
         vendedor: string
+    }[]
+}
+
+export type ObtenerUsuarioResponse = {
+    obtenerUsuario:{
+        id: string
+        nombre: string
+        apellido: string
     }
 }

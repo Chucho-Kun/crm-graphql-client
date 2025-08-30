@@ -4,6 +4,7 @@ import { AutenticarUsuarioInput, AutenticarUsuarioResponse } from "@/types";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { useFormik } from "formik";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
@@ -18,11 +19,11 @@ const AUTENTICAR_USUARIO = gql`
 export default function loginPage() {
 
   const router = useRouter()
-  const [ mensaje , setMensaje ] = useState('')
-  const [ autenticarUsuario , { loading } ] = useMutation<AutenticarUsuarioResponse , { input : AutenticarUsuarioInput }>(AUTENTICAR_USUARIO)
+  const [mensaje, setMensaje] = useState('')
+  const [autenticarUsuario, { loading }] = useMutation<AutenticarUsuarioResponse, { input: AutenticarUsuarioInput }>(AUTENTICAR_USUARIO)
 
   const formik = useFormik({
-    initialValues:{
+    initialValues: {
       email: '',
       password: ''
     },
@@ -41,24 +42,24 @@ export default function loginPage() {
           }
         })
 
-        if(data?.autenticarUsuario){
+        if (data?.autenticarUsuario) {
           const { autenticarUsuario: { token } } = data;
-          localStorage.setItem( 'token' , token )
+          localStorage.setItem('token', token)
           setMensaje('Acceso Correcto')
-          setTimeout(() => { router.push('/') },2000)
+          setTimeout(() => { router.push('/clientes') }, 1000)
         }
 
       } catch (error) {
-        if(error instanceof Error){
-          setMensaje( error.message ); 
+        if (error instanceof Error) {
+          setMensaje(error.message);
         }
       }
-    
+
     }
   })
 
-  const { email , password } = formik.values
-  const { email : _email , password : _password } = formik.errors
+  const { email, password } = formik.values
+  const { email: _email, password: _password } = formik.errors
 
   if (loading) return <div>Cargando...</div>
 
@@ -67,7 +68,7 @@ export default function loginPage() {
       <h1 className='text-white text-center text-2xl font-light'>Login</h1>
       <div className='flex justify-center mt-5'>
         <div className='w-full max-w-sm'>
-          { mensaje && <ErrorForm msn={ mensaje } /> }  
+          {mensaje && <ErrorForm msn={mensaje} />}
           <form
             className='bg-white rounded shadow-md px-6 pt-8 pb-8 mb-4'
             onSubmit={formik.handleSubmit}
@@ -116,6 +117,11 @@ export default function loginPage() {
               type="submit"
             />
           </form>
+
+          <Link href='/login/nuevacuenta' className='text-white opacity-60 hover:opacity-100 align-middle flex justify-center' >
+            ¿No tienes cuenta? crea una
+          </Link>
+
         </div>
       </div>
     </>

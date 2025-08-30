@@ -1,4 +1,5 @@
 "use client"
+import Loader from "@/components/layouts/Loader"
 import { ClientesVendedorResponse } from "@/types"
 import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
@@ -18,16 +19,11 @@ query obtenerClientesVendedor{
 
 export default function clientesPage() {
 
-  const { data, loading, error } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR)
+  const { data, loading } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR , { fetchPolicy: 'no-cache' })
 
-  //const { obtenerClientesVendedor : { nombre } } = data
+  if (loading) return <Loader />
 
-  console.log({ data });
-  console.log({ error });
-
-  if (loading) return <div>Cargando...</div>
-
-  return (
+  if ( !loading && data?.obtenerClientesVendedor) return (
     <div>
       <h1 className="text-2xl text-gray-800 font-light">Clientes</h1>
 
@@ -39,9 +35,17 @@ export default function clientesPage() {
             <th className="w-1/5 py-2">Email</th>
           </tr>
         </thead>
+
         <tbody className="bg-white">
-          { data.obte }
+          {data.obtenerClientesVendedor.map(cliente => (
+            <tr key={cliente.id}>
+              <td className="border border-gray-200 px-4 py-2">{cliente.nombre} {cliente.apellido}</td>
+              <td className="border border-gray-200 px-4 py-2">{cliente.empresa}</td>
+              <td className="border border-gray-200 px-4 py-2">{cliente.email}</td>
+            </tr>
+          ))}
         </tbody>
+
       </table>
     </div>
   )

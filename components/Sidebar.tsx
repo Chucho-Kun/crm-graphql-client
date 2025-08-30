@@ -16,7 +16,7 @@ export default function Sidebar() {
             </div>
 
             <nav className='text-white list-none'>
-                <Link href="/">
+                <Link href="/clientes">
                     <li className={`py-4 p-3 hover:bg-blue-600 transition-colors duration-300 ${pathname == "/" && 'bg-blue-800'}`}>
                         Clientes
                     </li>
