@@ -5,8 +5,8 @@ const httpLink = new HttpLink({
   uri: 'http://localhost:4000'
 });
 
-const authLink = new SetContextLink(( prevContext , operation ) => {
-  if( typeof window === "undefined" ) return prevContext;
+const authLink = new SetContextLink((prevContext, operation) => {
+  if (typeof window === "undefined") return prevContext;
 
   const token = localStorage.getItem('token');
   return {
@@ -17,9 +17,27 @@ const authLink = new SetContextLink(( prevContext , operation ) => {
   };
 });
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        obtenerClientesVendedor: {
+          keyArgs: false,
+          merge(existing = [], incoming: any[]) {
+            return [...incoming];
+          }
+        }
+      }
+    },
+    Cliente: {
+      keyFields: ['id']
+    }
+  }
+});
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache
 });
 
 export default client;

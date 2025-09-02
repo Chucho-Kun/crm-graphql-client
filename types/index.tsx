@@ -37,9 +37,20 @@ export type ClientesVendedorResponse = {
 }
 
 export type ObtenerUsuarioResponse = {
-    obtenerUsuario:{
+    obtenerUsuario: {
         id: string
         nombre: string
         apellido: string
+    }
+}
+
+export type NuevoClienteResponse = {
+    nuevoCliente: {
+        id: string
+        nombre: string
+        apellido: string
+        empresa: string
+        email: string
+        telefono: string
     }
 }

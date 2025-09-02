@@ -1,52 +1,41 @@
 "use client"
+import TablaClientes from "@/components/clientes/TablaClientes"
 import Loader from "@/components/layouts/Loader"
 import { ClientesVendedorResponse } from "@/types"
 import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
+import Link from "next/link"
 
-const OBTENER_CLIENTES_VENDEDOR = gql`
-query obtenerClientesVendedor{
+export const OBTENER_CLIENTES_VENDEDOR = gql`
+query ObtenerClientesVendedor {
   obtenerClientesVendedor {
+    id
     nombre
     apellido
     empresa
     email
-    id
     vendedor
   }
-}
-`
+}`;
 
 export default function clientesPage() {
 
-  const { data, loading } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR , { fetchPolicy: 'no-cache' })
+  const { data, loading } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR )
 
   if (loading) return <Loader />
 
   if ( !loading && data?.obtenerClientesVendedor) return (
     <div>
       <h1 className="text-2xl text-gray-800 font-light">Clientes</h1>
+      <Link 
+        href='clientes/nuevocliente'
+        className="bg-blue-800 py-2 px-5 mt-3 inline-block text-white rounded text-xs hover:bg-blue-700 mb-2 uppercase"  
+      >
+        Nuevo Cliente
+      </Link>
 
-      <table className="table-auto shadow-md mt-10 w-full">
-        <thead className="bg-gray-800">
-          <tr className="text-white">
-            <th className="w-1/5 py-2">Nombre</th>
-            <th className="w-1/5 py-2">Empres</th>
-            <th className="w-1/5 py-2">Email</th>
-          </tr>
-        </thead>
-
-        <tbody className="bg-white">
-          {data.obtenerClientesVendedor.map(cliente => (
-            <tr key={cliente.id}>
-              <td className="border border-gray-200 px-4 py-2">{cliente.nombre} {cliente.apellido}</td>
-              <td className="border border-gray-200 px-4 py-2">{cliente.empresa}</td>
-              <td className="border border-gray-200 px-4 py-2">{cliente.email}</td>
-            </tr>
-          ))}
-        </tbody>
-
-      </table>
+      <TablaClientes data={ data.obtenerClientesVendedor } />
+ 
     </div>
   )
 }

@@ -51,7 +51,7 @@ export default function nuevaCuentaPage() {
           }
         });
 
-        if (data?.nuevoUsuario) {
+        if (data) {
           const { nombre } = data.nuevoUsuario;
           setMensaje(`El usuario ${nombre} fue creado correctamente. Favor de ingresar desde el siguiente formulario`)
           router.push('/login')
