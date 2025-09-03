@@ -55,6 +55,8 @@ export type NuevoClienteResponse = {
     }
 }
 
+export type InputCliente = Pick<NuevoClienteResponse['nuevoCliente'], 'nombre' | 'apellido' | 'email' | 'empresa' | 'telefono'>
+
 export type ObtenerClienteResponse = {
     obtenerCliente: {
         id: string
@@ -88,3 +90,35 @@ export type ObtenerProductosResponse = {
         creado: string
     }[]
 }
+
+export type ObtenerProductoResponse = {
+    obtenerProducto: {
+        id: string
+        nombre: string
+        existencia: string
+        precio: string
+        creado: string
+    }
+}
+
+export type NuevoProductoResponse = {
+    nuevoProducto: {
+        id: string
+        nombre: string
+        existencia: string
+        precio: string
+    }
+}
+
+export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' >
+
+export type ActualizaProductoResponse = {
+    actualizaProducto: {
+        id: string
+        nombre: string
+        existencia: string
+        precio: string
+    }
+}
+
+export type InputProducto = Pick<ActualizaProductoResponse['actualizaProducto'], 'nombre' | 'existencia' | 'precio' | 'id'>

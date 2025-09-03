@@ -42,9 +42,7 @@ export default function EditarClientePage() {
     variables: { id }
   })
 
-  const [ actualizarCliente ] = useMutation<ActualizaClienteResponse>(ACTUALIZAR_CLIENTE, {
-
-  })
+  const [ actualizarCliente ] = useMutation<ActualizaClienteResponse>(ACTUALIZAR_CLIENTE)
 
   const schemaValidacion = Yup.object({
     nombre: Yup.string()

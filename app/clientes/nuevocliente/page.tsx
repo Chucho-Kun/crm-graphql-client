@@ -1,7 +1,7 @@
 "use client"
 import ErrorForm from "@/components/layouts/ErrorForm";
 import Loader from "@/components/layouts/Loader";
-import { ClientesVendedorResponse, NuevoClienteResponse } from "@/types";
+import { ClientesVendedorResponse, InputCliente, NuevoClienteResponse } from "@/types";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { useFormik } from "formik"
@@ -39,7 +39,7 @@ export default function NuevosClientesPage() {
   const router = useRouter();
   const [ mensaje , setMensaje ] = useState('')
 
-  const [ nuevoCliente , { loading } ] = useMutation<NuevoClienteResponse>( NUEVO_CLIENTE , {
+  const [ nuevoCliente , { loading } ] = useMutation<NuevoClienteResponse, { input : InputCliente }>( NUEVO_CLIENTE , {
     update( cache , { data } ){
       if(!data?.nuevoCliente) return;
 

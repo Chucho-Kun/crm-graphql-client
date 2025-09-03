@@ -1,6 +1,7 @@
 import { ObtenerProductosResponse } from "@/types"
 import { gql , Reference } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
+import { useRouter } from "next/navigation";
 import Swal from "sweetalert2"
 
 const ELIMINAR_PRODUCTO = gql`
@@ -9,6 +10,8 @@ mutation Mutation($id: ID!) {
 }`;
 
 export default function TablaProductos({ obtenerProductos }: ObtenerProductosResponse) {
+
+    const router = useRouter()
 
     let idEliminado = ''
     const [eliminarProducto, { loading }] = useMutation<{ eliminarProducto: string }>(ELIMINAR_PRODUCTO, {
@@ -59,6 +62,12 @@ export default function TablaProductos({ obtenerProductos }: ObtenerProductosRes
         });
     }
 
+    const editarProducto = ( id : string ) => {
+
+        router.push(`/productos/editar/${ id }`)
+
+    }
+
     return (
         <table className="table-auto shadow-md mt-10 w-full">
             <thead className="bg-gray-800">
@@ -97,7 +106,7 @@ export default function TablaProductos({ obtenerProductos }: ObtenerProductosRes
                             </td>
                             <td className="border border-gray-200 px-4 py-2">
                                 <button
-                                    onClick={() => { }}
+                                    onClick={() => editarProducto( id )}
                                     type='button'
                                     className='flex justify-center items-center bg-green-700 opacity-80 hover:opacity-100 py-2 px-4 w-full text-white rounded cursor-pointer'
                                 >
