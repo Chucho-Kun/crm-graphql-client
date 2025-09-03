@@ -54,3 +54,27 @@ export type NuevoClienteResponse = {
         telefono: string
     }
 }
+
+export type ObtenerClienteResponse = {
+    obtenerCliente: {
+        id: string
+        nombre: string
+        apellido: string
+        empresa: string
+        email: string
+        telefono: string
+    }
+}
+
+export type ActualizaClienteResponse = {
+    actualizarCliente: {
+        id: string
+        nombre: string
+        apellido: string
+        empresa: string
+        email: string
+        telefono: string
+    }
+}
+
+export type ActualizarClienteProps = Pick<ActualizaClienteResponse['actualizarCliente'], 'id' | 'nombre' | 'apellido' | 'empresa' | 'email' | 'telefono'>

@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
 import { useMutation, useQuery } from '@apollo/client/react';
-import { XCircleIcon } from '@heroicons/react/24/solid';
 import Swal from 'sweetalert2';
-import Loader from '../layouts/Loader';
 import { ClientesVendedorResponse } from '@/types';
+import { useRouter } from 'next/navigation';
 
 type TablaClientesProps = {
     data: {
@@ -41,40 +40,42 @@ query ObtenerClientesVendedor {
 
 export default function TablaClientes({ data }: TablaClientesProps) {
 
-        let idEliminado = '';        
-        const [ eliminarCliente ] = useMutation<{ eliminarCliente: string },{ id: string }>(ELIMINAR_CLIENTE , {
-            update( cache ){
+    const router = useRouter()
 
-                const dataResponse = cache.readQuery<ClientesVendedorResponse>({ query: OBTENER_CLIENTES_VENDEDOR })
+    let idEliminado = '';
+    const [eliminarCliente] = useMutation<{ eliminarCliente: string }, { id: string }>(ELIMINAR_CLIENTE, {
+        update(cache) {
 
-                if(!dataResponse) return;
+            const dataResponse = cache.readQuery<ClientesVendedorResponse>({ query: OBTENER_CLIENTES_VENDEDOR })
 
-                const nuevosClientes = dataResponse.obtenerClientesVendedor.filter( cliente => cliente.id !== idEliminado )
-                
-                cache.writeQuery({
-                    query: OBTENER_CLIENTES_VENDEDOR,
-                    data:{
-                        obtenerClientesVendedor: nuevosClientes
-                    }
-                })
-            }
-        }) 
+            if (!dataResponse) return;
+
+            const nuevosClientes = dataResponse.obtenerClientesVendedor.filter(cliente => cliente.id !== idEliminado)
+
+            cache.writeQuery({
+                query: OBTENER_CLIENTES_VENDEDOR,
+                data: {
+                    obtenerClientesVendedor: nuevosClientes
+                }
+            })
+        }
+    })
 
 
-    const avisoBorrar = ({ id, nombre, apellido }: ClientesType) => {        
+    const avisoBorrar = ({ id, nombre, apellido }: ClientesType) => {
 
         idEliminado = id;
 
         Swal.fire({
             title: "Borrar Cliente",
-            text: `Deseas borrar a ${ nombre } ${ apellido }?`,
+            text: `Deseas borrar a ${nombre} ${apellido}?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#b9b9b9",
             confirmButtonText: "Borrar",
             reverseButtons: true
-        }).then( async (result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
 
                 try {
@@ -95,7 +96,10 @@ export default function TablaClientes({ data }: TablaClientesProps) {
             }
         });
 
+    }
 
+    const editarCliente = ( id : string) => {
+        router.push(`/clientes/editar/${ id }`)
     }
 
     return (
@@ -105,7 +109,8 @@ export default function TablaClientes({ data }: TablaClientesProps) {
                     <th className="w-1/5 py-2">Nombre</th>
                     <th className="w-1/5 py-2">Empresa</th>
                     <th className="w-1/5 py-2">Email</th>
-                    <th className="w-1/5 py-2">Acciones</th>
+                    <th className="w-1/5 py-2"></th>
+                    <th className="w-1/5 py-2"></th>
                 </tr>
             </thead>
 
@@ -118,11 +123,35 @@ export default function TablaClientes({ data }: TablaClientesProps) {
                             <td className="border border-gray-200 px-4 py-2">{empresa}</td>
                             <td className="border border-gray-200 px-4 py-2">{email}</td>
                             <td className="border border-gray-200 px-4 py-2">
-                                <XCircleIcon
-                                    className='w-8 h-8 text-blue-800 opacity-60 hover:opacity-100 cursor-pointer'
+                                <button
                                     onClick={() => avisoBorrar({ id, nombre, apellido })}
-                                />
+                                    type='button'
+                                    className='flex justify-center items-center bg-red-700 opacity-80 hover:opacity-100 py-2 px-4 w-full text-white rounded cursor-pointer'
+                                >
+                                    Eliminar
+                                    <div className='ml-2'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </div>
+                                </button>
                             </td>
+                            <td className="border border-gray-200 px-4 py-2">
+                                <button
+                                    onClick={() => editarCliente( id ) }
+                                    type='button'
+                                    className='flex justify-center items-center bg-green-700 opacity-80 hover:opacity-100 py-2 px-4 w-full text-white rounded cursor-pointer'
+                                >
+                                    Editar
+                                    <div className='ml-2'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+
+                                    </div>
+                                </button>
+                            </td>
+
                         </tr>
                     )
                 }
