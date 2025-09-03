@@ -34,7 +34,7 @@ export default function clientesPage() {
         Nuevo Cliente
       </Link>
 
-      <TablaClientes data={ data.obtenerClientesVendedor } />
+      <TablaClientes obtenerClientesVendedor={ data.obtenerClientesVendedor } />
  
     </div>
   )

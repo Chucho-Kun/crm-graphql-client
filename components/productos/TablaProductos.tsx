@@ -1,49 +1,36 @@
-import { gql , Reference } from '@apollo/client';
-import { useMutation } from '@apollo/client/react';
-import Swal from 'sweetalert2';
-import { ClientesVendedorResponse } from '@/types';
-import { useRouter } from 'next/navigation';
+import { ObtenerProductosResponse } from "@/types"
+import { gql , Reference } from "@apollo/client"
+import { useMutation } from "@apollo/client/react"
+import Swal from "sweetalert2"
 
-type ClientesType = {
-    id: string
-    nombre: string
-    apellido: string
-}
-
-const ELIMINAR_CLIENTE = gql`
-mutation eliminarCliente($id: ID!) {
-  eliminarCliente(id: $id)
+const ELIMINAR_PRODUCTO = gql`
+mutation Mutation($id: ID!) {
+  eliminarProducto(id: $id)
 }`;
 
-export default function TablaClientes({ obtenerClientesVendedor }: ClientesVendedorResponse) {
+export default function TablaProductos({ obtenerProductos }: ObtenerProductosResponse) {
 
-    const router = useRouter()
+    let idEliminado = ''
+    const [eliminarProducto, { loading }] = useMutation<{ eliminarProducto: string }>(ELIMINAR_PRODUCTO, {
 
-    let idEliminado = '';
-    const [eliminarCliente] = useMutation<{ eliminarCliente: string }>(ELIMINAR_CLIENTE, {
+        update(cache){
 
-        update( cache ){
-            
             cache.modify({
                 fields:{
-                    obtenerClientesVendedor( existingClientes : ReadonlyArray<Reference> = [], { readField } ){
-                        return existingClientes.filter( cliente => readField('id', cliente) !== idEliminado )
+                    obtenerProductos( existingProducts: ReadonlyArray<Reference> = [], { readField}){
+                        return existingProducts.filter( producto => readField('id', producto) !== idEliminado )
                     }
                 }
             })
-
         }
-       
     })
 
-
-    const avisoBorrar = ({ id, nombre, apellido }: ClientesType) => {
+    const borrarProducto = ({ id, nombre }: { id: string, nombre: string }) => {
 
         idEliminado = id;
-
         Swal.fire({
-            title: "Borrar Cliente",
-            text: `Deseas borrar a ${nombre} ${apellido}?`,
+            title: "Borrar Producto",
+            text: `Deseas eliminar ${nombre}?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
@@ -54,14 +41,14 @@ export default function TablaClientes({ obtenerClientesVendedor }: ClientesVende
             if (result.isConfirmed) {
 
                 try {
-                    const { data } = await eliminarCliente({
+                    const { data } = await eliminarProducto({
                         variables: { id }
                     })
 
                     // mostrar alerta
                     Swal.fire({
-                        title: "Borrado!",
-                        text: data?.eliminarCliente,
+                        title: "Producto Eliminado!",
+                        text: data?.eliminarProducto,
                         icon: "success"
                     });
 
@@ -70,11 +57,6 @@ export default function TablaClientes({ obtenerClientesVendedor }: ClientesVende
                 }
             }
         });
-
-    }
-
-    const editarCliente = ( id : string) => {
-        router.push(`/clientes/editar/${ id }`)
     }
 
     return (
@@ -82,24 +64,26 @@ export default function TablaClientes({ obtenerClientesVendedor }: ClientesVende
             <thead className="bg-gray-800">
                 <tr className="text-white">
                     <th className="w-1/5 py-2">Nombre</th>
-                    <th className="w-1/5 py-2">Empresa</th>
-                    <th className="w-1/5 py-2">Email</th>
+                    <th className="w-1/5 py-2">Exitencia</th>
+                    <th className="w-1/5 py-2">Precio</th>
                     <th className="w-1/5 py-2"></th>
                     <th className="w-1/5 py-2"></th>
                 </tr>
             </thead>
 
             <tbody className="bg-white">
-                {obtenerClientesVendedor.map(cliente => {
-                    const { id, nombre, apellido, empresa, email } = cliente
+                {obtenerProductos.map(producto => {
+
+                    const { id, nombre, existencia, precio, creado } = producto
+
                     return (
                         <tr key={id}>
-                            <td className="border border-gray-200 px-4 py-2">{nombre} {apellido}</td>
-                            <td className="border border-gray-200 px-4 py-2">{empresa}</td>
-                            <td className="border border-gray-200 px-4 py-2">{email}</td>
+                            <td className="border border-gray-200 px-4 py-2">{nombre}</td>
+                            <td className="border border-gray-200 px-4 py-2">{existencia} pzas</td>
+                            <td className="border border-gray-200 px-4 py-2">${precio}.00</td>
                             <td className="border border-gray-200 px-4 py-2">
                                 <button
-                                    onClick={() => avisoBorrar({ id, nombre, apellido })}
+                                    onClick={() => borrarProducto({ id, nombre })}
                                     type='button'
                                     className='flex justify-center items-center bg-red-700 opacity-80 hover:opacity-100 py-2 px-4 w-full text-white rounded cursor-pointer'
                                 >
@@ -113,7 +97,7 @@ export default function TablaClientes({ obtenerClientesVendedor }: ClientesVende
                             </td>
                             <td className="border border-gray-200 px-4 py-2">
                                 <button
-                                    onClick={() => editarCliente( id ) }
+                                    onClick={() => { }}
                                     type='button'
                                     className='flex justify-center items-center bg-green-700 opacity-80 hover:opacity-100 py-2 px-4 w-full text-white rounded cursor-pointer'
                                 >
@@ -132,7 +116,6 @@ export default function TablaClientes({ obtenerClientesVendedor }: ClientesVende
                 }
                 )}
             </tbody>
-
         </table>
     )
 }

@@ -78,3 +78,13 @@ export type ActualizaClienteResponse = {
 }
 
 export type ActualizarClienteProps = Pick<ActualizaClienteResponse['actualizarCliente'], 'id' | 'nombre' | 'apellido' | 'empresa' | 'email' | 'telefono'>
+
+export type ObtenerProductosResponse = {
+    obtenerProductos: {
+        id: string
+        nombre: string
+        existencia: string
+        precio: string
+        creado: string
+    }[]
+}
