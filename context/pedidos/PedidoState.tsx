@@ -1,7 +1,7 @@
 "use client"
 import { ReactNode, useReducer } from "react";
 import { PedidoContext } from "./PedidoContext";
-import { CANTIDAD_PRODUCTOS, ClienteProps, SELECCIONAR_CLIENTE, SELECCIONAR_PRODUCTO } from "@/types";
+import { CANTIDAD_PRODUCTOS, ClienteProps, InputProducto, NuevoProductoType, SELECCIONAR_CLIENTE, SELECCIONAR_PRODUCTO } from "@/types";
 import PedidoReducer from "./PedidoReducer";
 
 type PedidoStateProps = {
@@ -20,18 +20,47 @@ export default function PedidoState({ children } : PedidoStateProps ) {
 
     // modifica cliente
     const agregarCliente = ( cliente: ClienteProps ) => {
-    
         dispatch({
             type: SELECCIONAR_CLIENTE,
             payload: cliente
         })
+    }
 
+    // modifica productos
+    const agregarProducto = (seleccionados : InputProducto[]) => {
+        
+        let nuevoState;
+        if( state.productos.length > 0 ){
+            // Tomar del segundo arreglo la copia para asignarlo al primero
+            nuevoState = seleccionados.map( producto => {
+                const nuevoObjeto = state.productos.find( productoState => productoState.id === producto.id )
+                return { ...producto, ...nuevoObjeto }
+            } )
+        }else{
+            nuevoState = seleccionados;
+        }
+
+        dispatch({
+            type: SELECCIONAR_PRODUCTO,
+            payload: nuevoState
+        })
+    } 
+
+    // modifica las cantidades de los productos
+    const cantidadProductos = (nuevoProducto : NuevoProductoType ) => {
+        dispatch({
+            type: CANTIDAD_PRODUCTOS,
+            payload: nuevoProducto
+        })
     }
 
   return (
     <PedidoContext.Provider
         value={{
-            agregarCliente
+            productos: state.productos,
+            agregarCliente,
+            agregarProducto,
+            cantidadProductos
         }}
     >{ children }
     </PedidoContext.Provider>

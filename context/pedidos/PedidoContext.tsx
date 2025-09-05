@@ -1,4 +1,4 @@
-import { ClienteProps } from "@/types";
+import { ClienteProps, InputProducto, NuevoProductoType, ProductoInput } from "@/types";
 import { createContext } from "react";
 
 type Pedido = {
@@ -8,7 +8,10 @@ type Pedido = {
 };
 
 type PedidoContextType = {
-  agregarCliente:(cliente : ClienteProps ) => void;
+  productos: ProductoInput[]
+  agregarCliente:(cliente : ClienteProps ) => void
+  agregarProducto:(productos : InputProducto[]) => void
+  cantidadProductos:( nuevoProducto : NuevoProductoType ) => void
 };
 
 export const PedidoContext = createContext<PedidoContextType | null>(null)

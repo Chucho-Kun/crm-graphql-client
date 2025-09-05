@@ -115,7 +115,9 @@ export type NuevoProductoResponse = {
     }
 }
 
-export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' >
+export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' | 'id' >
+
+export type NuevoProductoType = ProductoInput & { cantidad: number }
 
 export type ActualizaProductoResponse = {
     actualizaProducto: {
