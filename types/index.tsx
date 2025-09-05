@@ -1,3 +1,7 @@
+export const SELECCIONAR_CLIENTE = 'SELECCIONAR_CLIENTE'
+export const SELECCIONAR_PRODUCTO = 'SELECCIONAR_PRODUCTO'
+export const CANTIDAD_PRODUCTOS = 'CANTIDAD_PRODUCTOS'
+
 export type UsuarioInput = {
     nombre: string
     apellido: string
@@ -35,6 +39,8 @@ export type ClientesVendedorResponse = {
         vendedor: string
     }[]
 }
+
+export type ClienteProps = ClientesVendedorResponse['obtenerClientesVendedor'][number]
 
 export type ObtenerUsuarioResponse = {
     obtenerUsuario: {
@@ -97,7 +103,6 @@ export type ObtenerProductoResponse = {
         nombre: string
         existencia: string
         precio: string
-        creado: string
     }
 }
 

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
 import ApolloProviderComponent from "@/components/ApolloProviderComponent";
+import PedidoState from "@/context/pedidos/PedidoState";
 
 const inter = Inter({
   subsets: ["latin"]
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${inter.className}`} >
 
         <ApolloProviderComponent>
-          <MainLayout children={children} />
+          <PedidoState>
+            <MainLayout children={children} />
+          </PedidoState>
         </ApolloProviderComponent>
 
       </body>

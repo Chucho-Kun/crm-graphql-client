@@ -5,7 +5,7 @@ import { ActualizaProductoResponse, InputProducto, ObtenerProductoResponse, Obte
 import { gql } from '@apollo/client';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { Formik } from 'formik';
-import { useParams, useRouter } from 'next/navigation'
+import { notFound, useParams, useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 import * as Yup from 'yup'
 
@@ -15,7 +15,6 @@ query ObtenerProductos {
     nombre
     existencia
     precio
-    creado
   }
 }`;
 
@@ -111,7 +110,7 @@ export default function EditarProductoPage() {
 
     if (loading) return <Loader />
 
-    if (!data) return;
+    if (!data) return notFound() ;
     const { obtenerProducto } = data;
 
     if( !loading && data ) return (
