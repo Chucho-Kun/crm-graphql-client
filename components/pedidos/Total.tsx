@@ -1,8 +1,11 @@
-import React from 'react'
+import { PedidoContext } from '@/context/pedidos/PedidoContext';
+import React, { useContext } from 'react'
 
 export default function Total() {
 
-    const total = 200;
+    const pedidocontext = useContext( PedidoContext );
+    if( !pedidocontext ) return;
+    const { total } = pedidocontext;
 
     return (
         <div className='flex items-center mt-5 justify-between bg-white p-3'>

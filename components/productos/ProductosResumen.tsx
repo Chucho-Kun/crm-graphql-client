@@ -10,13 +10,15 @@ export default function ProductosResumen({ producto }: ProductosResumenProps) {
 
     const [ cantidad , setCantidad ] = useState('')
 
-    useEffect(() => {
-        actualizaCantidad( Number( cantidad ) )
-    } , [ cantidad ])
-
     const pedidocontext = useContext( PedidoContext )
     if( !pedidocontext ) return;
-    const { cantidadProductos } = pedidocontext
+    const { cantidadProductos , actualizaTotal } = pedidocontext
+
+
+    useEffect(() => {
+        actualizaCantidad( Number( cantidad ) ); actualizaTotal()
+    } , [ cantidad ])
+
 
     const actualizaCantidad = ( cantidad : number ) => {
         const nuevoProducto = { ...producto, cantidad }

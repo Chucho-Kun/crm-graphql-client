@@ -1,7 +1,7 @@
 "use client"
 import { ReactNode, useReducer } from "react";
 import { PedidoContext } from "./PedidoContext";
-import { CANTIDAD_PRODUCTOS, ClienteProps, InputProducto, NuevoProductoType, SELECCIONAR_CLIENTE, SELECCIONAR_PRODUCTO } from "@/types";
+import { ACTUALIZA_TOTAL, CANTIDAD_PRODUCTOS, ClienteProps, InputProducto, NuevoProductoType, SELECCIONAR_CLIENTE, SELECCIONAR_PRODUCTO } from "@/types";
 import PedidoReducer from "./PedidoReducer";
 
 type PedidoStateProps = {
@@ -11,7 +11,7 @@ type PedidoStateProps = {
 export default function PedidoState({ children } : PedidoStateProps ) {
 
     const initialState = {
-        cliente: null,
+        cliente: [],
         productos: [],
         total: 0
     }
@@ -54,13 +54,23 @@ export default function PedidoState({ children } : PedidoStateProps ) {
         })
     }
 
+    const actualizaTotal = () => {
+        dispatch({
+            type: ACTUALIZA_TOTAL
+        })
+        
+    }
+
   return (
     <PedidoContext.Provider
         value={{
             productos: state.productos,
+            total: state.total,
+            cliente: state.cliente,
             agregarCliente,
             agregarProducto,
-            cantidadProductos
+            cantidadProductos,
+            actualizaTotal
         }}
     >{ children }
     </PedidoContext.Provider>

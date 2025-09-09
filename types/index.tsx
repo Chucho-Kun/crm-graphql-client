@@ -1,6 +1,7 @@
 export const SELECCIONAR_CLIENTE = 'SELECCIONAR_CLIENTE'
 export const SELECCIONAR_PRODUCTO = 'SELECCIONAR_PRODUCTO'
 export const CANTIDAD_PRODUCTOS = 'CANTIDAD_PRODUCTOS'
+export const ACTUALIZA_TOTAL = 'ACTUALIZA_TOTAL'
 
 export type UsuarioInput = {
     nombre: string
@@ -117,7 +118,7 @@ export type NuevoProductoResponse = {
 
 export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' | 'id' >
 
-export type NuevoProductoType = ProductoInput & { cantidad: number }
+export type NuevoProductoType = ProductoInput & { cantidad: number } & { creado: string } & { __typename : string}
 
 export type ActualizaProductoResponse = {
     actualizaProducto: {
@@ -129,3 +130,10 @@ export type ActualizaProductoResponse = {
 }
 
 export type InputProducto = Pick<ActualizaProductoResponse['actualizaProducto'], 'nombre' | 'existencia' | 'precio' | 'id'>
+
+export type NuevoPedidoType = {
+    nuevoPedido:{
+        id: string
+    }
+}
+
