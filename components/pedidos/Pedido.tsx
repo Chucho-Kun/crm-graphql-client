@@ -7,8 +7,7 @@ type PedidoProps = {
 
 export default function Pedido({ pedido }: PedidoProps) {
 
-    const { id, total, cliente, estado } = pedido
-    //  pedido : { cantidad , id : idPedido , nombre }
+    const { id, total, cliente : { nombre , apellido ,telefono ,email } , estado } = pedido
     const [estadoPedido, setEstadoPedido] = useState(estado)
 
     useEffect(() => {
@@ -18,7 +17,7 @@ export default function Pedido({ pedido }: PedidoProps) {
     return (
         <div className="mt-4 bg-white rounded p-6 grid md:grid-cols-2 md:gap-4 shadow-lg">
             <div>
-                <p className="font-bold text-gray-800" >Cliente {cliente}</p>
+                <p className="font-bold text-gray-800" >Cliente: { nombre } { apellido }</p>
                 <h2 className="text-gray-800 font-bold mt-10" >Estado Pedido</h2>
 
                 <select

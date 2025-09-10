@@ -142,17 +142,24 @@ export type NuevoPedidoType = {
 export type PedidoType = {
     id: string
     pedido: {
-        cantidad: number
         id: string
+        cantidad: number
         nombre: string
     }[]
-    cliente: string
+    cliente: {
+        id: string
+        nombre: String
+        apellido: String
+        empresa: String
+        email: String
+        telefono: String
+    }
     vendedor: string
     total: number
     estado: string
 }
 
 export type ObtenerPedidosType = {
-    obtenerPedidos: PedidoType[]
+    obtenerPedidosVendedor: PedidoType[]
 }
 
