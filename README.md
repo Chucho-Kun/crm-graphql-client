@@ -3,7 +3,6 @@
 ## Technologies
 Next + React + Typescript + TailwindCSS + GraphQL + ApolloClient + Formik + Yup
 ## Developer Notes
-
 ### Config to clear cache
 ```
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
@@ -50,7 +49,6 @@ const client = new ApolloClient({
 
 export default client;
 ```
-
 ### Correct form to use GraphQL 
 ### app/clientes/editar/[id]
 ```
