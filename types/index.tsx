@@ -1,3 +1,5 @@
+import { number, string } from "yup"
+
 export const SELECCIONAR_CLIENTE = 'SELECCIONAR_CLIENTE'
 export const SELECCIONAR_PRODUCTO = 'SELECCIONAR_PRODUCTO'
 export const CANTIDAD_PRODUCTOS = 'CANTIDAD_PRODUCTOS'
@@ -135,5 +137,22 @@ export type NuevoPedidoType = {
     nuevoPedido:{
         id: string
     }
+}
+
+export type PedidoType = {
+    id: string
+    pedido: {
+        cantidad: number
+        id: string
+        nombre: string
+    }[]
+    cliente: string
+    vendedor: string
+    total: number
+    estado: string
+}
+
+export type ObtenerPedidosType = {
+    obtenerPedidos: PedidoType[]
 }
 
