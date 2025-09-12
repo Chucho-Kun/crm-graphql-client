@@ -1,4 +1,3 @@
-import { number, string } from "yup"
 
 export const SELECCIONAR_CLIENTE = 'SELECCIONAR_CLIENTE'
 export const SELECCIONAR_PRODUCTO = 'SELECCIONAR_PRODUCTO'
@@ -163,3 +162,13 @@ export type ObtenerPedidosType = {
     obtenerPedidosVendedor: PedidoType[]
 }
 
+export type ActualizarPedidoType = {
+    actualizarPedido: {
+        estado: string
+        id: string
+    }
+}
+
+export type EliminarPedidoType = {
+    eliminarPedido: string
+}

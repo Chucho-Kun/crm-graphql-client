@@ -30,12 +30,10 @@ query ObtenerPedidosVendedor {
 
 export default function pedidosPage() {
 
-  const { data , loading , error } = useQuery<ObtenerPedidosType>( OBTENER_PEDIDOS_VENDEDOR )  
+  const { data , loading } = useQuery<ObtenerPedidosType>( OBTENER_PEDIDOS_VENDEDOR )  
 
   if( !data) return 
   const { obtenerPedidosVendedor } = data;
-  //console.log('*',obtenerPedidos);
-  
   
   if( loading ) return <Loader />
 

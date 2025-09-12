@@ -61,7 +61,7 @@ export default function NuevoCliente() {
         options={obtenerClientesVendedor}
         onChange={sabor => opt(sabor)}
         getOptionValue={options => options.id}
-        getOptionLabel={options => options.nombre}
+        getOptionLabel={options => options.nombre+' '+options.apellido}
         placeholder="Buscar un cliente"
         noOptionsMessage={() => 'No se encontraron resultados'}
       />

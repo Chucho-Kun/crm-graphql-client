@@ -26,6 +26,12 @@ const cache = new InMemoryCache({
           merge(existing = [], incoming: any[]) {
             return [...incoming];
           }
+        },
+        obtenerPedidosVendedor: {
+          keyArgs: false, // ✅ indica que no hay argumentos que distingan esta query
+          merge(existing = [], incoming: any[]) {
+            return incoming; // ✅ reemplaza de forma segura sin perder normalización
+          }
         }
       }
     },
