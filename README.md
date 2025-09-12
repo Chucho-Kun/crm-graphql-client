@@ -33,6 +33,12 @@ const cache = new InMemoryCache({
           merge(existing = [], incoming: any[]) {
             return [...incoming];
           }
+        },
+        obtenerPedidosVendedor: {
+          keyArgs: false, 
+          merge(existing = [], incoming: any[]) {
+            return incoming;
+          }
         }
       }
     },
