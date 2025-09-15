@@ -1,21 +1,10 @@
 import { InputProducto, ObtenerProductosResponse } from '@/types'
-import { gql } from '@apollo/client'
 import { useQuery } from '@apollo/client/react'
 import React, { useContext, useEffect, useState } from 'react'
 import Select, { MultiValue } from 'react-select'
 import Loader from '../layouts/Loader'
 import { PedidoContext } from '@/context/pedidos/PedidoContext'
-
-const OBTENER_PRODUCTOS = gql`
-query ObtenerProductos {
-  obtenerProductos {
-    id
-    nombre
-    existencia
-    precio
-    creado
-  }
-}`
+import { OBTENER_PRODUCTOS } from '@/graphql/productos'
 
 export default function NuevoProducto() {
 

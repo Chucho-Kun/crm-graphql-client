@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client/react';
 import Swal from 'sweetalert2';
 import { ClientesVendedorResponse } from '@/types';
 import { useRouter } from 'next/navigation';
+import { ELIMINAR_CLIENTE } from '@/graphql/clientes';
 
 type ClientesType = {
     id: string
@@ -10,17 +11,12 @@ type ClientesType = {
     apellido: string
 }
 
-const ELIMINAR_CLIENTE = gql`
-mutation eliminarCliente($id: ID!) {
-  eliminarCliente(id: $id)
-}`;
-
 export default function TablaClientes({ obtenerClientesVendedor }: ClientesVendedorResponse) {
 
     const router = useRouter()
 
     let idEliminado = '';
-    const [eliminarCliente] = useMutation<{ eliminarCliente: string }>(ELIMINAR_CLIENTE, {
+    const [ eliminarCliente ] = useMutation<{ eliminarCliente: string }>(ELIMINAR_CLIENTE, {
 
         update( cache ){
             

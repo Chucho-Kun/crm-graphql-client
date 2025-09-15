@@ -96,6 +96,7 @@ export type ObtenerProductosResponse = {
         existencia: string
         precio: string
         creado: string
+        __typename: string
     }[]
 }
 
@@ -117,7 +118,7 @@ export type NuevoProductoResponse = {
     }
 }
 
-export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' | 'id' >
+export type ProductoInput = Pick<NuevoProductoResponse['nuevoProducto'], 'nombre' | 'existencia' | 'precio' | 'id'>
 
 export type NuevoProductoType = ProductoInput & { cantidad: number } & { creado: string } & { __typename : string}
 
@@ -127,10 +128,12 @@ export type ActualizaProductoResponse = {
         nombre: string
         existencia: string
         precio: string
+        creado: string
+        __typename: string
     }
 }
 
-export type InputProducto = Pick<ActualizaProductoResponse['actualizaProducto'], 'nombre' | 'existencia' | 'precio' | 'id'>
+export type InputProducto = Pick<ActualizaProductoResponse['actualizaProducto'], 'nombre' | 'existencia' | 'precio' | 'id' | 'creado' | '__typename'>
 
 export type NuevoPedidoType = {
     nuevoPedido:{

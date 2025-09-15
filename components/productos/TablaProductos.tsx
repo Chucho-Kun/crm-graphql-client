@@ -1,13 +1,9 @@
+import { ELIMINAR_PRODUCTO } from "@/graphql/productos";
 import { ObtenerProductosResponse } from "@/types"
-import { gql , Reference } from "@apollo/client"
+import { Reference } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2"
-
-const ELIMINAR_PRODUCTO = gql`
-mutation Mutation($id: ID!) {
-  eliminarProducto(id: $id)
-}`;
 
 export default function TablaProductos({ obtenerProductos }: ObtenerProductosResponse) {
 
@@ -83,7 +79,7 @@ export default function TablaProductos({ obtenerProductos }: ObtenerProductosRes
             <tbody className="bg-white">
                 {obtenerProductos.map(producto => {
 
-                    const { id, nombre, existencia, precio, creado } = producto
+                    const { id, nombre, existencia, precio } = producto
 
                     return (
                         <tr key={id}>

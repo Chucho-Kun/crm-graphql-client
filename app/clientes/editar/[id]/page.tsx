@@ -1,37 +1,13 @@
 "use client"
 import ErrorForm from '@/components/layouts/ErrorForm';
 import Loader from '@/components/layouts/Loader';
+import { ACTUALIZAR_CLIENTE, OBTENER_CLIENTE } from '@/graphql/clientes';
 import { ActualizaClienteResponse, ActualizarClienteProps, ObtenerClienteResponse } from '@/types';
-import { gql } from '@apollo/client';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { Formik } from 'formik';
 import { useParams, useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 import * as Yup from 'yup'
-
-const OBTENER_CLIENTE = gql`
-query ObtenerCliente($id: ID!) {
-  obtenerCliente(id: $id) {
-    id
-    nombre
-    apellido
-    empresa
-    email
-    telefono
-  }
-}`;
-
-const ACTUALIZAR_CLIENTE = gql`
-mutation ActualizarCliente($id: ID! , $input: ClienteInput) {
-  actualizarCliente(id: $id , input: $input ) {
-    id
-    nombre
-    apellido
-    empresa
-    email
-    telefono
-  }
-}`;
 
 export default function EditarClientePage() {
 

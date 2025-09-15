@@ -1,32 +1,10 @@
 "use client"
 import Loader from "@/components/layouts/Loader";
 import Pedido from "@/components/pedidos/Pedido";
+import { OBTENER_PEDIDOS_VENDEDOR } from "@/graphql/pedidos";
 import { ObtenerPedidosType } from "@/types";
-import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import Link from "next/link";
-
-const OBTENER_PEDIDOS_VENDEDOR = gql`
-query ObtenerPedidosVendedor {
-  obtenerPedidosVendedor {
-    id
-    pedido {
-      id
-      cantidad
-      nombre
-    }
-    cliente {
-      id
-      nombre
-      apellido
-      email
-      telefono
-    }
-    total
-    vendedor
-    estado
-  }
-}`;
 
 export default function pedidosPage() {
 

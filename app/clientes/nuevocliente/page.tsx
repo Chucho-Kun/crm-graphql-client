@@ -2,37 +2,12 @@
 import ErrorForm from "@/components/layouts/ErrorForm";
 import Loader from "@/components/layouts/Loader";
 import { ClientesVendedorResponse, InputCliente, NuevoClienteResponse } from "@/types";
-import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { useFormik } from "formik"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup"
-import { ObtenerUsuarioResponse } from '../../../types/index';
-
-const NUEVO_CLIENTE = gql`
-mutation Mutation($input: ClienteInput) {
-  nuevoCliente(input: $input) {
-    id
-    nombre
-    apellido
-    empresa
-    email
-    telefono
-  }
-}
-`;
-
-const OBTENER_CLIENTES_VENDEDOR = gql`
-query ObtenerClientesVendedor {
-  obtenerClientesVendedor {
-    id
-    nombre
-    apellido
-    empresa
-    email
-  }
-}`;
+import { NUEVO_CLIENTE, OBTENER_CLIENTES_VENDEDOR } from "@/graphql/clientes";
 
 export default function NuevosClientesPage() {
 

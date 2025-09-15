@@ -5,18 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import Loader from "../layouts/Loader";
 import { ClienteProps, ClientesVendedorResponse } from "@/types";
-
-export const OBTENER_CLIENTES_VENDEDOR = gql`
-query ObtenerClientesVendedor {
-  obtenerClientesVendedor {
-    id
-    nombre
-    apellido
-    empresa
-    email
-    vendedor
-  }
-}`;
+import { OBTENER_CLIENTES_VENDEDOR } from "@/graphql/clientes";
 
 export default function NuevoCliente() {
   

@@ -1,22 +1,10 @@
 "use client"
 import TablaClientes from "@/components/clientes/TablaClientes"
 import Loader from "@/components/layouts/Loader"
+import { OBTENER_CLIENTES_VENDEDOR } from "@/graphql/clientes"
 import { ClientesVendedorResponse } from "@/types"
-import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
 import Link from "next/link"
-
-export const OBTENER_CLIENTES_VENDEDOR = gql`
-query ObtenerClientesVendedor {
-  obtenerClientesVendedor {
-    id
-    nombre
-    apellido
-    empresa
-    email
-    vendedor
-  }
-}`;
 
 export default function clientesPage() {
 

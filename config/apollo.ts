@@ -32,6 +32,12 @@ const cache = new InMemoryCache({
           merge(existing = [], incoming: any[]) {
             return incoming; // ✅ reemplaza de forma segura sin perder normalización
           }
+        },
+        obtenerProductos: {
+          keyArgs: false,
+          merge(existing = [], incoming: any[]) {
+            return incoming;
+          }
         }
       }
     },

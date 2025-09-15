@@ -1,5 +1,5 @@
+import { ACTUALIZAR_PEDIDO, ELIMINAR_PEDIDO, OBTENER_PEDIDOS } from "@/graphql/pedidos";
 import { ActualizarPedidoType, EliminarPedidoType, ObtenerPedidosType, PedidoType } from "@/types";
-import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -7,28 +7,6 @@ import Swal from "sweetalert2";
 type PedidoProps = {
     pedido: PedidoType
 }
-
-const ACTUALIZAR_PEDIDO = gql`
-mutation Mutation($id: ID!, $input: PedidoInput) {
-  actualizarPedido(id: $id, input: $input) {
-    estado
-    id
-  }
-}
-`;
-
-const ELIMINAR_PEDIDO= gql`
-mutation EliminarPedido($id: ID!) {
-  eliminarPedido(id: $id)
-}`
-
-const OBTENER_PEDIDOS = gql`
-query ObtenerPedidosVendedor {
-  obtenerPedidosVendedor {
-        id
-    }
-}`;
-
 
 export default function Pedido({ pedido }: PedidoProps) {
 
@@ -206,3 +184,7 @@ export default function Pedido({ pedido }: PedidoProps) {
         </div>
     )
 }
+
+
+
+

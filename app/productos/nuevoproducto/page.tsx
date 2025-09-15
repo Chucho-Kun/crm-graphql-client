@@ -1,33 +1,13 @@
 "use client"
 import ErrorForm from "@/components/layouts/ErrorForm";
 import Loader from "@/components/layouts/Loader";
+import { NUEVO_PRODUCTO, OBTENER_PRODUCTOS } from "@/graphql/productos";
 import { NuevoProductoResponse, ObtenerProductosResponse, ProductoInput } from "@/types";
-import { gql, Reference } from "@apollo/client"
 import { useMutation } from "@apollo/client/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import * as Yup from "yup"
-
-const NUEVO_PRODUCTO = gql`
-mutation NuevoProducto($input: ProductoInput) {
-  nuevoProducto(input: $input) {
-    id
-    nombre
-    existencia
-    precio
-  }
-}`;
-
-const OBTENER_PRODUCTOS = gql`
-query ObtenerProductos {
-  obtenerProductos {
-    id
-    nombre
-    existencia
-    precio
-  }
-}`
 
 export default function nuevoProductoPage() {
 
@@ -73,7 +53,9 @@ export default function nuevoProductoPage() {
             try {
                 const { data } = await nuevoProducto({
                     variables: {
-                        input
+                        input:{
+                            nombre, existencia ,precio
+                        }
                     }
                 })
 

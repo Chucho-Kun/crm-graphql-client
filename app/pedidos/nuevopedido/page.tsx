@@ -4,26 +4,12 @@ import NuevoProducto from "@/components/pedidos/NuevoProducto";
 import ResumenPedido from "@/components/pedidos/ResumenPedido";
 import Total from "@/components/pedidos/Total";
 import { PedidoContext } from "@/context/pedidos/PedidoContext";
+import { NUEVO_PEDIDO, OBTENER_PEDIDOS } from "@/graphql/pedidos";
 import { NuevoPedidoType, ObtenerPedidosType } from "@/types";
-import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import Swal from "sweetalert2";
-
-const NUEVO_PEDIDO = gql`
-mutation NuevoPedido($input: PedidoInput) {
-  nuevoPedido(input: $input) {
-    id
-  }
-}`;
-
-const OBTENER_PEDIDOS_VENDEDOR = gql`
-query ObtenerPedidosVendedor {
-  obtenerPedidosVendedor {
-    id
-  }
-}`;
 
 export default function nuevoPedidoPage() {
 
@@ -41,14 +27,14 @@ export default function nuevoPedidoPage() {
 
       const nuevoCache = data.nuevoPedido
       const dataResponse = cache.readQuery<ObtenerPedidosType>({
-        query: OBTENER_PEDIDOS_VENDEDOR
+        query: OBTENER_PEDIDOS
       });
 
       if( !dataResponse ) return;
       const { obtenerPedidosVendedor } = dataResponse;
 
       cache.writeQuery({
-        query:OBTENER_PEDIDOS_VENDEDOR,
+        query:OBTENER_PEDIDOS,
         data:{
           obtenerPedidosVendedor: [ ...obtenerPedidosVendedor, nuevoCache ]
         }
@@ -63,7 +49,7 @@ export default function nuevoPedidoPage() {
     const pedido = productos.map( ( { __typename, existencia , creado , ...producto } ) => producto )
     
     try {
-      const { data } = await nuevoPedido({
+      await nuevoPedido({
         variables: {
           input: {
             cliente: id,

@@ -1,41 +1,14 @@
 "use client"
 import ErrorForm from '@/components/layouts/ErrorForm';
 import Loader from '@/components/layouts/Loader';
+import { ACTUALIZAR_PRODUCTO, OBTENER_PRODUCTO, OBTENER_PRODUCTOS } from '@/graphql/productos';
 import { ActualizaProductoResponse, InputProducto, ObtenerProductoResponse, ObtenerProductosResponse } from '@/types';
-import { gql } from '@apollo/client';
+import { Reference } from '@apollo/client';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { Formik } from 'formik';
 import { notFound, useParams, useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 import * as Yup from 'yup'
-
-const OBTENER_PRODUCTOS = gql`
-query ObtenerProductos {
-  obtenerProductos {
-    nombre
-    existencia
-    precio
-  }
-}`;
-
-const OBTENER_PRODUCTO = gql`
-query ObtenerProducto($id: ID) {
-  obtenerProducto(id: $id) {
-    id
-    nombre
-    existencia
-    precio
-  }
-}`;
-
-const ACTUALIZAR_PRODUCTO = gql`
-mutation ActualizaProducto($id: ID, $input: ProductoInput) {
-  actualizaProducto(id: $id, input: $input) {
-    nombre
-    existencia
-    precio
-  }
-}`;
 
 export default function EditarProductoPage() {
 
@@ -46,19 +19,22 @@ export default function EditarProductoPage() {
         variables: { id }
     })
 
-    const [actualizaProducto] = useMutation<ActualizaProductoResponse>(ACTUALIZAR_PRODUCTO , {
+    const [ actualizaProducto ] = useMutation<ActualizaProductoResponse>(ACTUALIZAR_PRODUCTO , {
 
         update( cache , { data } ){
             if(!data?.actualizaProducto) return;
 
             const productoActualizado = data.actualizaProducto;
 
+            console.log({productoActualizado});
+            
             const existingData = cache.readQuery<ObtenerProductosResponse>({ query : OBTENER_PRODUCTOS })
 
             if( !existingData ) return;
 
-            const productosActualizados = existingData.obtenerProductos.map( producto => producto.id === productoActualizado.id ? productoActualizado : producto )
-
+            const productosActualizados = existingData.obtenerProductos.map( producto => producto.id === productoActualizado.id ? {...producto, ...productoActualizado} : producto )
+            console.log(productosActualizados);
+            
             cache.writeQuery({
                 query: OBTENER_PRODUCTOS,
                 data: {
@@ -72,7 +48,6 @@ export default function EditarProductoPage() {
 
     const actualizarInfoProducto = async (valores: InputProducto) => {
 
-        console.log('actualizarInfoProducto()', { valores });
         const { id, nombre, existencia, precio } = valores
 
         try {

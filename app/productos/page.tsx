@@ -1,27 +1,16 @@
 "use client"
 import Loader from "@/components/layouts/Loader"
 import TablaProductos from "@/components/productos/TablaProductos"
+import { OBTENER_PRODUCTOS } from "@/graphql/productos"
 import { ObtenerProductosResponse } from "@/types"
-import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
 import Link from "next/link"
 
-const OBTENER_PRODUCTOS = gql`
-query ObtenerProductos {
-  obtenerProductos {
-    id
-    nombre
-    existencia
-    precio
-    creado
-  }
-}`
-
 export default function productosPage() {
 
-  const { data, loading, error } = useQuery<ObtenerProductosResponse>(OBTENER_PRODUCTOS)
-
-  console.log(data);
+  const { data, loading } = useQuery<ObtenerProductosResponse>(OBTENER_PRODUCTOS, {
+    
+  })
 
   if( loading ) return <Loader />
 
