@@ -31,6 +31,21 @@ export default function Sidebar() {
                         Productos
                     </li>
                 </Link>
+
+                <div className='sm:mt-10'>
+                    <p className='text-white font-bold text-2xl'>Otras Opciones</p>
+                </div>
+
+                <Link href="/mejores-vendedores">
+                    <li className={`py-4 p-3 hover:bg-blue-600 transition-colors duration-300 ${pathname == "/mejores-vendedores" && 'bg-blue-800'}`}>
+                        Mejores Vendedores:
+                    </li>
+                </Link>
+                <Link href="/mejores-clientes">
+                    <li className={`py-4 p-3 hover:bg-blue-600 transition-colors duration-300 ${pathname == "/mejores-clientes" && 'bg-blue-800'}`}>
+                        Mejores Clientes
+                    </li>
+                </Link>
             </nav>
         </aside>
     )

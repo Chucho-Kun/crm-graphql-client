@@ -1,4 +1,3 @@
-
 export const SELECCIONAR_CLIENTE = 'SELECCIONAR_CLIENTE'
 export const SELECCIONAR_PRODUCTO = 'SELECCIONAR_PRODUCTO'
 export const CANTIDAD_PRODUCTOS = 'CANTIDAD_PRODUCTOS'
@@ -174,4 +173,15 @@ export type ActualizarPedidoType = {
 
 export type EliminarPedidoType = {
     eliminarPedido: string
+}
+
+export type MejoresVendedoresType = {
+    mejoresVendedores: {
+        total: number
+        vendedor: {
+            nombre: string
+            apellido: string
+            email: string
+        }[]
+    }[]
 }
