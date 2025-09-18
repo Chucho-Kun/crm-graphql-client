@@ -1,7 +1,23 @@
-# FullStack Platform GraphQL NEXT / REACT / TypeScript
-## Client
+# FullStack Platform GraphQL NEXT / REACT / TypeScript [ Client ]
+Customer CRM in React that works with GraphQL, shows sections of customers, products and orders that can be edited like a CRUD app, also shows a graph of which sellers and which customers have sold the most
+## 🚀 Tech Stack
+
+![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-006400?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-00008b?style=for-the-badge&logo=typescript)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-6f4905?style=for-the-badge&logo=tailwindcss)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=graphql)
+![Apollo Client](https://img.shields.io/badge/Apollo_Client-311C87?style=for-the-badge&logo=apollo-graphql)
+![Formik](https://img.shields.io/badge/Formik-EF5B5B?style=for-the-badge&logo=formik)
+![Yup](https://img.shields.io/badge/Yup-4B5563?style=for-the-badge)
+
 ## Technologies
 Next + React + Typescript + TailwindCSS + GraphQL + ApolloClient + Formik + Yup
+<img width="1320" height="493" alt="Captura de Pantalla 2025-09-18 a la(s) 16 43 25" src="https://github.com/user-attachments/assets/3e2952ef-df51-4b7c-ba19-a1e54082b8cb" />
+<img width="1173" height="728" alt="Captura de Pantalla 2025-09-18 a la(s) 16 43 53" src="https://github.com/user-attachments/assets/1ce403a4-aa34-43f2-9ec7-4c3022a7b8b5" />
+<img width="1168" height="526" alt="Captura de Pantalla 2025-09-18 a la(s) 16 44 06" src="https://github.com/user-attachments/assets/d58cc5d0-e4be-4686-b51d-0800232b6360" />
+<img width="1165" height="508" alt="Captura de Pantalla 2025-09-18 a la(s) 16 44 34" src="https://github.com/user-attachments/assets/e112fc78-77dd-4ac5-a30d-ad13952258a7" />
+
 ## Developer Notes
 ### Config to clear cache
 ### config/apollo.ts
