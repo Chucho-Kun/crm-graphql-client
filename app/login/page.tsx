@@ -1,5 +1,6 @@
 "use client"
 import ErrorForm from "@/components/layouts/ErrorForm";
+import Loader from "@/components/layouts/Loader";
 import { AutenticarUsuarioInput, AutenticarUsuarioResponse } from "@/types";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
@@ -61,7 +62,7 @@ export default function loginPage() {
   const { email, password } = formik.values
   const { email: _email, password: _password } = formik.errors
 
-  if (loading) return <div>Cargando...</div>
+  if (loading) return <Loader />
 
   return (
     <>

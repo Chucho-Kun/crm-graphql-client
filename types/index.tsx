@@ -185,3 +185,14 @@ export type MejoresVendedoresType = {
         }[]
     }[]
 }
+
+export type MejoresClientesType = {
+    mejoresClientes: {
+        total: number
+        cliente: {
+            id: string
+            nombre: string
+            apellido: string
+        }[]
+    }[]
+}

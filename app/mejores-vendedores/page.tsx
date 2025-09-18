@@ -3,7 +3,7 @@ import Loader from '@/components/layouts/Loader';
 import { MejoresVendedoresType } from '@/types';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export const MEJORES_VENDEDORES = gql`
@@ -27,17 +27,22 @@ type VendedoresGraficaProps = {
 
 export default function mejoresVendedoresPage() {
 
-    const { data , loading } = useQuery<MejoresVendedoresType>(MEJORES_VENDEDORES, {
-        pollInterval:10000
-    })
+    const [height, setHeight] = useState(300);
 
-    const [ grafica , setGrafica ] = useState(false);
+    const updateHeight = () => {
+        const width = window.innerWidth
+        setHeight(width < 640 ? 300 : 500);
+    }
 
-    useEffect(()=> {
-        if(!data) return;
-        console.log('cambio grafica!!!');
-        setGrafica( true )
-    },[ data ])
+    useEffect(() => {
+        updateHeight();
+        window.addEventListener('resize', updateHeight);
+        return () => {
+            window.removeEventListener('resize', updateHeight);
+        };
+    }, [])
+
+    const { data, loading, refetch } = useQuery<MejoresVendedoresType>(MEJORES_VENDEDORES)
 
     if( !data ) return;
 
@@ -50,14 +55,22 @@ export default function mejoresVendedoresPage() {
     
     return (
         <>
-            <div>
-                <h1 className="text-2xl text-gray-800 font-light">Mejores Vendedores</h1>
+            <div className='flex justify-between items-center'>
+                <div>
+                    <h1 className="text-2xl text-gray-800 font-light">Mejores Vendedores</h1>
+                </div>
+                <div>
+                    <button 
+                        className="bg-blue-800 text-white cursor-pointer p-2 text-xs rounded hover:bg-blue-600 font-bold" type="button"
+                        onClick={() => refetch()}
+                    >ACTUALIZAR DATOS</button>
+                </div>
             </div>
 
-            { grafica && <ResponsiveContainer width="80%" height="80%">
+          <ResponsiveContainer className='mt-8' width="80%" height={ height } >
                 <BarChart
                     width={500}
-                    height={300}
+                    height={ height }
                     data={vendedoresGrafica}
                     margin={{
                         top: 5,
@@ -73,7 +86,7 @@ export default function mejoresVendedoresPage() {
                     <Legend />
                     <Bar dataKey="total" fill="#3182CE" />
                 </BarChart>
-            </ResponsiveContainer> }
+            </ResponsiveContainer>
         </>
     )
 }

@@ -9,7 +9,7 @@ export default function ErrorForm({ msn } : ErrorFormProps ) {
 
   return (
     <>
-      { msn && <div className={`px-3 py-1 text-xs text-white mb-3 ${ correcto ? 'bg-green-500' : 'bg-red-800' }`}>{ msn }</div> }
+      { msn && <div className={`px-3 py-1 text-xs text-white mb-3 ${ correcto ? 'bg-red-800' : 'bg-green-500' }`}>{ msn }</div> }
     </>
   )
 }
