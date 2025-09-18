@@ -67,6 +67,11 @@ export default function LoginPage() {
   return (
     <>
       <h1 className='text-white text-center text-2xl font-light'>Login</h1>
+      <div className="text-center text-blue-300 mt-5">
+        <div className="text-white">Email de Pruebas:</div>
+        <div>chu@chu.com.mx</div>
+        <div>123123</div>
+      </div>
       <div className='flex justify-center mt-5'>
         <div className='w-full max-w-sm'>
           {mensaje && <ErrorForm msn={mensaje} />}
