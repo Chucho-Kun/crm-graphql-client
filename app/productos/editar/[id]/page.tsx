@@ -2,8 +2,7 @@
 import ErrorForm from '@/components/layouts/ErrorForm';
 import Loader from '@/components/layouts/Loader';
 import { ACTUALIZAR_PRODUCTO, OBTENER_PRODUCTO, OBTENER_PRODUCTOS } from '@/graphql/productos';
-import { ActualizaProductoResponse, InputProducto, ObtenerProductoResponse, ObtenerProductosResponse } from '@/types';
-import { Reference } from '@apollo/client';
+import { ActualizaProductoResponse, InfoProducto, ObtenerProductoResponse, ObtenerProductosResponse } from '@/types';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { Formik } from 'formik';
 import { notFound, useParams, useRouter } from 'next/navigation'
@@ -46,7 +45,7 @@ export default function EditarProductoPage() {
 
     })
 
-    const actualizarInfoProducto = async (valores: InputProducto) => {
+    const actualizarInfoProducto = async (valores: InfoProducto) => {
 
         const { id, nombre, existencia, precio } = valores
 

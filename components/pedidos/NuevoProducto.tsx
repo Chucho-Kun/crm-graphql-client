@@ -1,6 +1,6 @@
 import { InputProducto, ObtenerProductosResponse } from '@/types'
 import { useQuery } from '@apollo/client/react'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Select, { MultiValue } from 'react-select'
 import Loader from '../layouts/Loader'
 import { PedidoContext } from '@/context/pedidos/PedidoContext'
@@ -9,22 +9,18 @@ import { OBTENER_PRODUCTOS } from '@/graphql/productos'
 export default function NuevoProducto() {
 
     const pedidocontext = useContext(PedidoContext)
-    if (!pedidocontext) return
-    const { agregarProducto } = pedidocontext
 
-    const [productos, setProductos] = useState<MultiValue<InputProducto>>([])
-
-    useEffect(() => {
-        agregarProducto([...productos])
-    }, [productos])
+    const [ _, setProductos ] = useState<MultiValue<InputProducto>>([])
 
     const { data, loading } = useQuery<ObtenerProductosResponse>(OBTENER_PRODUCTOS)
+
     if (!data) return;
     const { obtenerProductos } = data
 
     const seleccionarProducto = (producto: MultiValue<InputProducto>) => {
-        if (!producto) return
+        if (!producto || !pedidocontext) return
         setProductos(producto)
+        pedidocontext.agregarProducto([...producto])
     }
 
     if (loading) return <Loader />

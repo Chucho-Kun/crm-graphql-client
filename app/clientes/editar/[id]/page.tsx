@@ -14,7 +14,7 @@ export default function EditarClientePage() {
   const { id } = useParams()
   const router = useRouter()
 
-  const { data, loading, error } = useQuery<ObtenerClienteResponse>(OBTENER_CLIENTE, {
+  const { data, loading } = useQuery<ObtenerClienteResponse>(OBTENER_CLIENTE, {
     variables: { id }
   })
 

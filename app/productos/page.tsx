@@ -6,7 +6,7 @@ import { ObtenerProductosResponse } from "@/types"
 import { useQuery } from "@apollo/client/react"
 import Link from "next/link"
 
-export default function productosPage() {
+export default function ProductosPage() {
 
   const { data, loading } = useQuery<ObtenerProductosResponse>(OBTENER_PRODUCTOS, {
     

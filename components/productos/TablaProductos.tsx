@@ -4,6 +4,7 @@ import { Reference } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2"
+import Loader from "../layouts/Loader";
 
 export default function TablaProductos({ obtenerProductos }: ObtenerProductosResponse) {
 
@@ -63,6 +64,8 @@ export default function TablaProductos({ obtenerProductos }: ObtenerProductosRes
         router.push(`/productos/editar/${ id }`)
 
     }
+
+    if( loading ) return <Loader />
 
     return (
         <div className='overflow-x-scroll'>

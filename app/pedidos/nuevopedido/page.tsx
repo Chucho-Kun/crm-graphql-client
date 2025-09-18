@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import NuevoCliente from "@/components/pedidos/NuevoCliente";
 import NuevoProducto from "@/components/pedidos/NuevoProducto";
 import ResumenPedido from "@/components/pedidos/ResumenPedido";
@@ -11,90 +11,91 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 
-export default function nuevoPedidoPage() {
+export default function NuevoPedidoPage() {
+  const [mensaje, setMensaje] = useState("");
 
-  const [ mensaje , setMensaje ] = useState('')
+  const router = useRouter();
 
-  const router = useRouter()
+  const [nuevoPedido] = useMutation<NuevoPedidoType>(NUEVO_PEDIDO, {
+    update(cache, { data }) {
+      if (!data?.nuevoPedido) return;
 
-  const pedidoContext = useContext(PedidoContext)
-  if( !pedidoContext ) return;
-  const { cliente , productos , total } = pedidoContext; 
-
-  const [ nuevoPedido ] = useMutation<NuevoPedidoType>( NUEVO_PEDIDO , {
-    update( cache , { data } ){
-      if( !data?.nuevoPedido ) return;
-
-      const nuevoCache = data.nuevoPedido
+      const nuevoCache = data.nuevoPedido;
       const dataResponse = cache.readQuery<ObtenerPedidosType>({
-        query: OBTENER_PEDIDOS
+        query: OBTENER_PEDIDOS,
       });
 
-      if( !dataResponse ) return;
+      if (!dataResponse) return;
       const { obtenerPedidosVendedor } = dataResponse;
 
       cache.writeQuery({
-        query:OBTENER_PEDIDOS,
-        data:{
-          obtenerPedidosVendedor: [ ...obtenerPedidosVendedor, nuevoCache ]
-        }
-      })
-    }
-  } )
+        query: OBTENER_PEDIDOS,
+        data: {
+          obtenerPedidosVendedor: [...obtenerPedidosVendedor, nuevoCache],
+        },
+      });
+    },
+  });
 
-    const crearNuevoPedido = async () => {
-    const { id } = cliente[0]
+  const pedidoContext = useContext(PedidoContext);
+  if (!pedidoContext) return;
+  const { cliente, productos, total } = pedidoContext;
+
+  const crearNuevoPedido = async () => {
+    const { id } = cliente[0];
 
     //remover variables no necesarias
-    const pedido = productos.map( ( { __typename, existencia , creado , ...producto } ) => producto )
-    
+    const pedido = productos.map((producto) => ({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      cantidad: producto.cantidad,
+    }));
+    //const pedido = productos.map( (  {  ...producto } ) => producto )
+
     try {
       await nuevoPedido({
         variables: {
           input: {
             cliente: id,
             total,
-            pedido
-          }
-        }
-      })
+            pedido,
+          },
+        },
+      });
 
-      router.push('/pedidos')
-      Swal.fire(
-        'Correcto',
-        'El pedido se registró correctamente',
-        'success'
-      )
-      
+      router.push("/pedidos");
+      Swal.fire("Correcto", "El pedido se registró correctamente", "success");
     } catch (error) {
-      if( error instanceof Error)
-      setMensaje( error.message )
-
+      console.log({ error });
+      if (error instanceof Error) setMensaje(error.message);
       setTimeout(() => {
-        setMensaje('')
-      },2000)
-      
+        setMensaje("");
+      }, 2000);
     }
-    //nuevoPedido
-  }
+  };
 
-  const  validarPedido = () => {    
-    return !productos.every( producto => producto.cantidad > 0 ) || total === 0 || cliente.length === 0 ? " opacity-50 cursor-not-allowed " : "";
-  }
+  const validarPedido = () => {
+    return !productos.every((producto) => producto.cantidad > 0) ||
+      total === 0 ||
+      cliente.length === 0
+      ? " opacity-50 cursor-not-allowed "
+      : "";
+  };
 
   const mostrarMensaje = () => {
-    return(
+    return (
       <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
-        <p>{ mensaje }</p>
+        <p>{mensaje}</p>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <>
       <div>Crear Nuevo Pedido</div>
 
-      { mensaje && mostrarMensaje() }
+      {mensaje && mostrarMensaje()}
 
       <div className="flex justify-center mt-5">
         <div className="w-full max-w-lg bg-gray-100 p-10 rounded-xl">
@@ -104,13 +105,13 @@ export default function nuevoPedidoPage() {
           <Total />
 
           <button
-            onClick={ () => crearNuevoPedido() }
-            className={ `bg-gray-500 w-full mt-5 p-2 text-white uppercase font-bold hover:bg-gray-700 cursor-pointer ${validarPedido()}` }
-          >REGISTRAR PEDIDO</button>
+            onClick={() => crearNuevoPedido()}
+            className={`bg-gray-500 w-full mt-5 p-2 text-white uppercase font-bold hover:bg-gray-700 cursor-pointer ${validarPedido()}`}
+          >
+            REGISTRAR PEDIDO
+          </button>
         </div>
       </div>
-
-
     </>
-  )
+  );
 }

@@ -25,7 +25,7 @@ type ClientesGraficaProps = {
     total: number
 }
 
-export default function mejoresClientesPage() {
+export default function MejoresClientesPage() {
     
     const [ height , setHeight ] = useState(300);
     

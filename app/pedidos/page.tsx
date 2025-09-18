@@ -6,7 +6,7 @@ import { ObtenerPedidosType } from "@/types";
 import { useQuery } from "@apollo/client/react";
 import Link from "next/link";
 
-export default function pedidosPage() {
+export default function PedidosPage() {
 
   const { data , loading } = useQuery<ObtenerPedidosType>( OBTENER_PEDIDOS_VENDEDOR )  
 

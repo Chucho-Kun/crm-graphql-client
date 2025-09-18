@@ -25,7 +25,7 @@ type VendedoresGraficaProps = {
     total: number
 }
 
-export default function mejoresVendedoresPage() {
+export default function MejoresVendedoresPage() {
 
     const [height, setHeight] = useState(300);
 

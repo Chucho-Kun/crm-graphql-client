@@ -6,7 +6,7 @@ import { ClientesVendedorResponse } from "@/types"
 import { useQuery } from "@apollo/client/react"
 import Link from "next/link"
 
-export default function clientesPage() {
+export default function ClientesPage() {
 
   const { data, loading } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR )
 

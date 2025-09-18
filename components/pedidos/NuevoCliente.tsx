@@ -1,7 +1,6 @@
 import { PedidoContext } from "@/context/pedidos/PedidoContext";
-import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import Loader from "../layouts/Loader";
 import { ClienteProps, ClientesVendedorResponse } from "@/types";
@@ -9,34 +8,23 @@ import { OBTENER_CLIENTES_VENDEDOR } from "@/graphql/clientes";
 
 export default function NuevoCliente() {
   
-  const [cliente, setCliente] = useState<SingleValue<ClienteProps>>(null)
-
   // context de pedidos
   const pedidocontext = useContext( PedidoContext )
-  if( !pedidocontext )return;
-  
-  const { agregarCliente } = pedidocontext
   
   const { data , loading } = useQuery<ClientesVendedorResponse>(OBTENER_CLIENTES_VENDEDOR)
-  console.log(data);
+  const [ _, setCliente] = useState<SingleValue<ClienteProps>>(null)
   
-  useEffect(() => {
-    if( cliente ){
-      agregarCliente( cliente )
-    }
-  }, [cliente])
-
+  if( !pedidocontext )return;
+  if(loading) return <Loader />
+  
+  if( !data?.obtenerClientesVendedor ) return;
+  
   const opt = (options: SingleValue<ClienteProps>) => {
-    console.log(options);
-    if (!options) return
+    if (!options || !pedidocontext) return
     setCliente(options)
+    pedidocontext.agregarCliente( options )
   }
 
-  // const pedidocontext = useContext(PedidoContext)
-  // console.log({ pedidocontext });
-
-  if(loading) return <Loader />
-  if( !data?.obtenerClientesVendedor ) return;
   const { obtenerClientesVendedor } = data
   return (
     <>

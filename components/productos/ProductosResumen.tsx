@@ -11,19 +11,18 @@ export default function ProductosResumen({ producto }: ProductosResumenProps) {
     const [ cantidad , setCantidad ] = useState('')
 
     const pedidocontext = useContext( PedidoContext )
-    if( !pedidocontext ) return;
-    const { cantidadProductos , actualizaTotal } = pedidocontext
 
+    const handleCantidadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const nuevaCantidad = e.target.value;
+      setCantidad(nuevaCantidad);
 
-    useEffect(() => {
-        actualizaCantidad( Number( cantidad ) ); actualizaTotal()
-    } , [ cantidad ])
-
-
-    const actualizaCantidad = ( cantidad : number ) => {
-        const nuevoProducto = { ...producto, cantidad }
-        cantidadProductos( nuevoProducto )
-    }
+      const cantidadNumerica = Number(nuevaCantidad);
+      if (pedidocontext && !isNaN(cantidadNumerica)) {
+        const nuevoProducto = { ...producto, cantidad: cantidadNumerica };
+        pedidocontext.cantidadProductos(nuevoProducto);
+        pedidocontext.actualizaTotal();
+      }
+    };
 
     const { nombre, precio } = producto
 
@@ -37,7 +36,7 @@ export default function ProductosResumen({ producto }: ProductosResumenProps) {
                 type="number"
                 placeholder='Cantidad'
                 className='shadow appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight bg-white focus:outline-none focus:shadow-outline md:ml-4'
-                onChange={ e => setCantidad( e.target.value ) }
+                onChange={ handleCantidadChange }
                 value={ cantidad }
             />
         </div>

@@ -17,7 +17,7 @@ const AUTENTICAR_USUARIO = gql`
     }
 }`;
 
-export default function loginPage() {
+export default function LoginPage() {
 
   const router = useRouter()
   const [mensaje, setMensaje] = useState('')
@@ -32,7 +32,7 @@ export default function loginPage() {
       email: Yup.string().email('El email no es válido').required('El email es obligatorio'),
       password: Yup.string().required('El password es obligatorio')
     }),
-    onSubmit: async valores => {
+    onSubmit: async () => {
 
       try {
         const { data } = await autenticarUsuario({

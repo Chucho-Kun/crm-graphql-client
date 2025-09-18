@@ -1,4 +1,4 @@
-import { gql , Reference } from '@apollo/client';
+import { Reference } from '@apollo/client';
 import { useMutation } from '@apollo/client/react';
 import Swal from 'sweetalert2';
 import { ClientesVendedorResponse } from '@/types';

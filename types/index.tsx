@@ -134,6 +134,13 @@ export type ActualizaProductoResponse = {
 
 export type InputProducto = Pick<ActualizaProductoResponse['actualizaProducto'], 'nombre' | 'existencia' | 'precio' | 'id' | 'creado' | '__typename'>
 
+export type InfoProducto = {
+    id: string;
+    nombre: string;
+    existencia: string;
+    precio: string;
+};
+
 export type NuevoPedidoType = {
     nuevoPedido:{
         id: string

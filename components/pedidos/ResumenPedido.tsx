@@ -8,9 +8,6 @@ export default function ResumenPedido() {
     if (!pedidocontext) return;
     const { productos } = pedidocontext;
 
-    console.log(productos);
-
-
     return (
         <>
             <p

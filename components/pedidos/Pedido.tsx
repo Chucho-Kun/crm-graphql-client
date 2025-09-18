@@ -36,20 +36,19 @@ export default function Pedido({ pedido }: PedidoProps) {
     const [ clase , setClase ] = useState('');
     const [ claseBtn , setClaseBtn ] = useState('');
 
+    const clasePedido = () => {
+        const estado = ( estadoPedido === 'PENDIENTE' ) ? 'border-yellow-500' : ( estadoPedido === 'COMPLETADO' ) ? 'border-green-500' : 'border-red-800';
+        const estadoBtn = ( estadoPedido === 'PENDIENTE' ) ? 'bg-yellow-500' : ( estadoPedido === 'COMPLETADO' ) ? 'bg-green-500' : 'bg-red-800';
+        setClase( estado )
+        setClaseBtn( estadoBtn )
+    }
+
     useEffect(() => {
         if (estadoPedido){
             setEstadoPedido(estadoPedido);
         } 
         clasePedido()
-    }, [estadoPedido])
-
-    const clasePedido = () => {
-
-        let estado = ( estadoPedido === 'PENDIENTE' ) ? 'border-yellow-500' : ( estadoPedido === 'COMPLETADO' ) ? 'border-green-500' : 'border-red-800';
-        let estadoBtn = ( estadoPedido === 'PENDIENTE' ) ? 'bg-yellow-500' : ( estadoPedido === 'COMPLETADO' ) ? 'bg-green-500' : 'bg-red-800';
-        setClase( estado )
-        setClaseBtn( estadoBtn )
-    }
+    }, [ estadoPedido , clasePedido ])
 
     const cambiarEstadoPedido = async (nuevoEstado : string ) => {
         try {

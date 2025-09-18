@@ -9,7 +9,6 @@ type PedidoContextType = {
   actualizaTotal: () => void
   total: number
   cliente: ClienteProps[]
-  id: string
 };
 
 export const PedidoContext = createContext<PedidoContextType | null>(null)

@@ -20,7 +20,7 @@ const NUEVA_CUENTA = gql`
 }
 `;
 
-export default function nuevaCuentaPage() {
+export default function NuevaCuentaPage() {
 
   const [mensaje, setMensaje] = useState('')
   const router = useRouter()
@@ -40,7 +40,7 @@ export default function nuevaCuentaPage() {
       email: Yup.string().email('El email no es vádido').required('El Email es obligatorio'),
       password: Yup.string().required('El password es obligatorio').min(4, 'El password debe tener al menos 4 caracteres')
     }),
-    onSubmit: async valores => {
+    onSubmit: async () => {
 
       try {
         const { data } = await nuevoUsuario({

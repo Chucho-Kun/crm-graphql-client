@@ -2,18 +2,18 @@
 import ErrorForm from "@/components/layouts/ErrorForm";
 import Loader from "@/components/layouts/Loader";
 import { NUEVO_PRODUCTO, OBTENER_PRODUCTOS } from "@/graphql/productos";
-import { NuevoProductoResponse, ObtenerProductosResponse, ProductoInput } from "@/types";
+import { NuevoProductoResponse, ObtenerProductosResponse } from "@/types";
 import { useMutation } from "@apollo/client/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import * as Yup from "yup"
 
-export default function nuevoProductoPage() {
+export default function NuevoProductoPage() {
 
     const router = useRouter()
 
-    const [ nuevoProducto, { loading } ] = useMutation<NuevoProductoResponse, { input: ProductoInput }>(NUEVO_PRODUCTO, {
+    const [ nuevoProducto, { loading } ] = useMutation<NuevoProductoResponse>(NUEVO_PRODUCTO, {
 
         update( cache , { data } ){
             if( !data?.nuevoProducto )return;
@@ -54,7 +54,7 @@ export default function nuevoProductoPage() {
                 const { data } = await nuevoProducto({
                     variables: {
                         input:{
-                            nombre, existencia ,precio
+                           nombre, existencia ,precio
                         }
                     }
                 })
