@@ -1,6 +1,6 @@
 import { PedidoContext } from '@/context/pedidos/PedidoContext'
 import { InputProducto } from '@/types'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 type ProductosResumenProps = {
     producto: InputProducto
